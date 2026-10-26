@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software Testing: Ensuring Quality and Reliability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--plum:#5b2a6e;--plum2:#9a5bb5;--sage:#7fa68a;--sage2:#d4e4d7;--ink:#2b2035;--mute:#5d5068;--glass:rgba(255,255,255,.58);--glow:0 0 18px rgba(154,91,181,.35);--r:22px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{margin:0;font:400 16px/1.65 Poppins,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f5eff9 0%,#eef3ee 55%,#e6f0e8 100%);background-attachment:fixed;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(91,42,110,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(91,42,110,.06) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 85%);mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 85%)}
+#cv{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,nav,footer{position:relative;z-index:1}
+a{color:var(--plum)}
+:focus-visible{outline:3px solid var(--plum2);outline-offset:3px;box-shadow:var(--glow);border-radius:10px}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+#bar{position:fixed;top:0;left:0;height:4px;width:0;z-index:50;background:linear-gradient(90deg,var(--sage),var(--plum2));box-shadow:0 0 12px var(--plum2)}
+#ld{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:linear-gradient(135deg,#f5eff9,#e6f0e8);transition:opacity .6s,visibility .6s}
+#ld.off{opacity:0;visibility:hidden}
+.ring{width:64px;height:64px;border-radius:50%;border:4px solid var(--sage2);border-top-color:var(--plum2);animation:spin 1s linear infinite;box-shadow:var(--glow)}
+@keyframes spin{to{transform:rotate(360deg)}}
+nav{position:sticky;top:6px;z-index:40;margin:6px auto 0;max-width:1060px;display:flex;gap:4px;align-items:center;padding:8px 12px;border-radius:999px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav b{font-weight:700;color:var(--plum);padding:0 10px;white-space:nowrap}
+nav a{white-space:nowrap;text-decoration:none;font-size:.82rem;font-weight:500;padding:6px 13px;border-radius:999px;color:var(--mute);transition:.25s}
+nav a.on{background:linear-gradient(120deg,var(--plum),var(--plum2));color:#fff;box-shadow:var(--glow)}
+.glass{background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 40px rgba(91,42,110,.12),inset 0 1px 0 rgba(255,255,255,.8)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(255,255,255,.9)}}
+.card{position:relative;border-radius:var(--r);padding:20px 22px;border:1.5px solid transparent;background:linear-gradient(var(--glass),var(--glass)) padding-box,linear-gradient(120deg,var(--plum2),var(--sage),var(--plum2)) border-box;background-size:auto,300% 100%;animation:bp 8s linear infinite;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 36px rgba(91,42,110,.12)}
+@keyframes bp{to{background-position:0 0,300% 0}}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+header.hero{min-height:88vh;display:grid;align-items:center;padding:60px 0 40px;position:relative}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55;pointer-events:none;transition:transform .3s ease-out}
+.o1{width:300px;height:300px;background:var(--plum2);top:6%;right:4%}.o2{width:260px;height:260px;background:var(--sage);bottom:4%;left:0}
+.tag{display:inline-block;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--plum);padding:6px 16px;border-radius:999px}
+h1{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.08;margin:18px 0 14px;font-weight:700;letter-spacing:-.02em;background:linear-gradient(110deg,var(--plum),var(--plum2) 45%,var(--sage));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.15rem;max-width:620px;color:var(--mute);font-weight:300}
+.btn{display:inline-block;border:0;text-decoration:none;font-weight:600;font-size:.95rem;padding:12px 26px;border-radius:999px;color:#fff;background:linear-gradient(120deg,var(--plum),var(--plum2));box-shadow:var(--glow);transition:transform .2s,box-shadow .2s}
+.btn.alt{background:rgba(255,255,255,.7);color:var(--plum);border:1.5px solid var(--plum2);box-shadow:none}
+.btn:active{transform:scale(.96)}
+@media(hover:hover){.btn:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(154,91,181,.6)}.card:hover{transform:translateY(-3px)}}
+.card{transition:transform .3s}
+section.sec{padding:54px 0 10px}
+.num{font:700 .85rem Poppins,sans-serif;letter-spacing:.3em;color:var(--sage);text-shadow:0 0 12px rgba(127,166,138,.7)}
+h2{font-size:clamp(1.6rem,3.6vw,2.4rem);margin:4px 0 8px;font-weight:600;color:var(--plum)}
+h3{margin:0 0 6px;font-size:1.05rem;color:var(--plum)}
+p{margin:0 0 12px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{border:1.5px solid var(--sage);background:rgba(255,255,255,.7);padding:6px 14px;border-radius:999px;font-size:.85rem;font-weight:500;transition:.2s}
+.chip[aria-pressed=true],.chip.on{background:var(--sage);color:#fff;box-shadow:0 0 14px rgba(127,166,138,.7)}
+@media(hover:hover){.chip:hover{border-color:var(--plum2);box-shadow:var(--glow)}}
+.out{min-height:48px;padding:12px 16px;border-radius:14px;background:rgba(212,228,215,.55);border-left:4px solid var(--sage)}
+[role=tablist]{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+[role=tab]{border:1.5px solid transparent;background:rgba(255,255,255,.55);padding:8px 18px;border-radius:999px;font-weight:600;font-size:.9rem;color:var(--mute)}
+[role=tab][aria-selected=true]{background:linear-gradient(120deg,var(--plum),var(--plum2));color:#fff;box-shadow:var(--glow)}
+.panel[hidden]{display:none}
+.panel{animation:fade .4s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+code,pre{font-family:"Cascadia Code",Consolas,Menlo,monospace}
+pre{margin:0;padding:14px;border-radius:14px;background:#2b2035;color:#efe6f5;font-size:.82rem;line-height:1.7;overflow-x:auto}
+pre span{display:block;padding:0 8px;border-radius:6px;white-space:pre}
+pre span.hl{background:rgba(127,166,138,.45);box-shadow:inset 3px 0 0 #b9e0c4;color:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+input[type=text]{font:inherit;padding:10px 16px;border-radius:999px;border:1.5px solid var(--plum2);background:rgba(255,255,255,.85);width:130px;color:var(--ink)}
+.dots{display:flex;gap:8px}.dots i{font-style:normal;font-size:.75rem;font-weight:600;padding:3px 11px;border-radius:999px;border:1.5px dashed var(--mute);color:var(--mute)}
+.dots i.on{border:1.5px solid var(--sage);background:var(--sage);color:#fff;box-shadow:0 0 12px var(--sage)}
+.lv{text-align:left;border:1.5px solid transparent;width:100%}
+.lv .k{font-weight:700;font-size:1.6rem;color:var(--sage)}
+.lv[aria-pressed=true]{box-shadow:0 0 0 2px var(--plum2),var(--glow)}
+#board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:460px;margin:12px 0}
+#board button{aspect-ratio:1.3;border-radius:16px;border:1.5px solid var(--sage);background:rgba(255,255,255,.7);font:600 .8rem "Cascadia Code",Consolas,monospace;color:var(--mute);transition:.15s}
+#board button.bug{background:linear-gradient(120deg,#c97ad8,#9a5bb5);color:#fff;border-color:#fff;box-shadow:0 0 22px #c97ad8;transform:scale(1.06)}
+.stat{font-weight:600;color:var(--plum)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:11px 16px;border-radius:14px;border:1.5px solid var(--sage);background:rgba(255,255,255,.75);transition:.2s}
+@media(hover:hover){.opt:not(:disabled):hover{border-color:var(--plum2);box-shadow:var(--glow)}}
+.opt.ok{background:#cfe8d6;border-color:#4e9a67}.opt.bad{background:#f3d3dc;border-color:#b5476a}
+.bar2{height:6px;border-radius:6px;background:var(--sage2);overflow:hidden;margin-bottom:10px}.bar2 i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sage),var(--plum2));transition:width .4s}
+ol.ref{padding-left:20px;font-size:.88rem}ol.ref li{margin-bottom:6px;padding-left:4px}
+footer{text-align:center;padding:30px 0 50px;color:var(--mute);font-size:.85rem}
+#top{position:fixed;right:18px;bottom:18px;z-index:45;width:48px;height:48px;border-radius:50%;border:0;color:#fff;font-size:1.3rem;background:linear-gradient(120deg,var(--plum),var(--plum2));box-shadow:var(--glow);opacity:0;visibility:hidden;transform:translateY(12px);transition:.3s}
+#top.show{opacity:1;visibility:visible;transform:none}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}
+.js .reveal.in{opacity:1;transform:none}
+.po{display:none}
+@media(max-width:600px){body{font-size:15px}header.hero{min-height:80vh}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .reveal{opacity:1;transform:none}}
+@media print{
+@page{size:A4;margin:9mm}
+html{font-size:9.5px}body{font-size:9.5px;line-height:1.45;background:#f5eff9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body::before,#cv,#ld,#bar,#top,nav,.orb,.noprint,.ctrl,.game,.quiz,footer .noprint{display:none!important}
+.js .reveal{opacity:1!important;transform:none!important}
+*{animation:none!important;transition:none!important}
+.glass,.card{-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;break-inside:avoid;padding:8px 11px;background:#fff!important;border:1px solid #cdb9d8}
+header.hero{min-height:0;padding:10px 0;display:block}h1{font-size:2rem;margin:6px 0}.lead{font-size:1rem}
+section.sec{padding:10px 0 2px}h2{font-size:1.4rem}h3{font-size:1rem}p{margin-bottom:5px}
+.panel[hidden]{display:block!important}[role=tablist]{display:none}
+.grid{gap:8px}.chips{margin:4px 0}.out{min-height:0;padding:5px 9px}
+pre{font-size:.8rem;padding:6px}.lv .k{font-size:1.1rem}
+.po{display:block}
+}
+</style>
+</head>
+<body>
+<div id="ld" role="status" aria-label="Loading"><div class="ring"></div></div>
+<div id="bar" aria-hidden="true"></div>
+<canvas id="cv" aria-hidden="true"></canvas>
+
+<nav class="glass" aria-label="Section navigation">
+<b>⟨/⟩ TestLab</b>
+<a href="#s1">Quality</a><a href="#s2">Fundamentals</a><a href="#s3">Black &amp; White Box</a><a href="#s4">Levels</a><a href="#s5">Game</a><a href="#s6">Quiz</a><a href="#refs">References</a>
+</nav>
+
+<main>
+<div class="wrap">
+<header class="hero" id="top-anchor">
+<span class="orb o1" data-p="-30"></span><span class="orb o2" data-p="25"></span>
+<div class="reveal" id="hc">
+<span class="tag glass">Software Engineering · Interactive E-Book</span>
+<h1>Software Testing:<br>Ensuring Quality and Reliability</h1>
+<p class="lead">How engineers build confidence that software does the right thing, the right way. Explore the ideas, run live demonstrations, play a bug-hunt and test yourself.</p>
+<div class="row noprint"><a class="btn" href="#s1">Begin reading</a><button class="btn alt" id="pr" type="button">Export as PDF</button></div>
+</div>
+</header>
+
+<section class="sec reveal" id="s1">
+<span class="num">01</span><h2>Software Quality</h2>
+<div class="grid">
+<div class="card"><p>Software quality is the degree to which a product meets stated requirements and user needs. ISO/IEC 25010 (2011) models it through eight characteristics. Testing is the main activity that gathers evidence about them (Pressman &amp; Maxim, 2020).</p>
+<p>Finding defects early matters: the later a fault is found, the more it costs to fix (Boehm, 1981).</p></div>
+<div class="card"><h3>Explore the quality model</h3>
+<div class="chips" id="qc"></div><div class="out" id="qo" aria-live="polite">Select a characteristic to see what it means and how it is tested.</div></div>
+</div>
+</section>
+
+<section class="sec reveal" id="s2">
+<span class="num">02</span><h2>Testing Fundamentals</h2>
+<div class="grid">
+<div class="card"><p>Testing is executing a program with the intent of finding errors (Myers et al., 2011). A <b>test case</b> pairs an input and precondition with an expected result; a mismatch reveals a <b>failure</b> caused by a <b>fault</b>.</p>
+<p>Testing can show the presence of bugs, never their absence (Dijkstra, 1970), and exhaustive testing is impractical, so tests must be chosen strategically.</p>
+<p><b>Example:</b> for a login form, input “valid user, wrong password” should expect “access denied”.</p></div>
+<div class="card"><h3>Verification vs. Validation</h3>
+<div role="tablist" aria-label="Verification and validation" id="vv">
+<button role="tab" type="button" id="t1" aria-controls="vp1">Verification</button><button role="tab" type="button" id="t2" aria-controls="vp2">Validation</button></div>
+<div class="panel" id="vp1" role="tabpanel" aria-labelledby="t1"><p><b>“Are we building the product right?”</b> Checks that work products conform to their specification through reviews, inspections and static analysis (Boehm, 1981).</p></div>
+<div class="panel" id="vp2" role="tabpanel" aria-labelledby="t2" hidden><p><b>“Are we building the right product?”</b> Checks that the software satisfies real user needs by executing it against customer expectations (Sommerville, 2016).</p></div></div>
+</div>
+</section>
+
+<section class="sec reveal" id="s3">
+<span class="num">03</span><h2>Black-Box &amp; White-Box Testing</h2>
+<p>Black-box testing derives tests from the specification (inputs and outputs only), using techniques such as equivalence partitioning and boundary value analysis. White-box testing derives tests from the code structure. <b>Basis-path testing</b> measures cyclomatic complexity V(G) = P + 1, where P is the number of predicate conditions, and exercises each independent path (McCabe, 1976; Pressman &amp; Maxim, 2020).</p>
+<div class="card">
+<h3>Live demo: <code>classify(n)</code> grades a score from 0 to 100</h3>
+<div class="row ctrl"><label for="inp"><b>Test input</b></label><input type="text" id="inp" inputmode="numeric" value="75" autocomplete="off">
+<button class="btn" id="run" type="button">Run test</button><button class="btn alt" id="rst" type="button">Reset coverage</button></div>
+<div class="chips ctrl" id="bv" aria-label="Boundary value shortcuts"></div>
+<div role="tablist" aria-label="Testing view" id="bw"><button role="tab" type="button" id="t3" aria-controls="bp1">Black-box view</button><button role="tab" type="button" id="t4" aria-controls="bp2">White-box view</button></div>
+<div class="panel" id="bp1" role="tabpanel" aria-labelledby="t3"><div class="out" id="bo" aria-live="polite">Run a test. You only see input, output and its equivalence class, never the code.</div>
+<p style="margin-top:8px;font-size:.88rem">Partitions: &lt;0 invalid · 0–49 fail · 50–100 pass · &gt;100 invalid. Boundary values: −1, 0, 49, 50, 100, 101.</p></div>
+<div class="panel" id="bp2" role="tabpanel" aria-labelledby="t4" hidden><div class="grid"><pre id="code" aria-label="Source code"></pre>
+<div><div class="out" id="wo" aria-live="polite">Run a test to light up the executed path.</div>
+<p style="margin:8px 0 6px;font-size:.88rem">Predicates: n&lt;0, n&gt;100, n≥50, so V(G) = 3 + 1 = <b>4 independent paths</b>.</p><div class="dots" id="dots"></div><p id="cov" style="margin-top:6px;font-size:.88rem">Path coverage: 0/4</p></div></div></div>
+</div>
+</section>
+
+<section class="sec reveal" id="s4">
+<span class="num">04</span><h2>Levels of Testing</h2>
+<p class="noprint">Select a level to see its focus.</p>
+<div class="grid" id="lvs"></div>
+<div class="card out noprint" id="lvo" style="margin-top:14px" aria-live="polite"></div>
+</section>
+
+<section class="sec reveal game" id="s5">
+<span class="num">05</span><h2>Mini-Game: Bug Hunt</h2>
+<div class="card"><p>Bugs flash purple for under a second. Click or tap them to squash them in 20 seconds. Clicking a clean cell costs a point.</p>
+<div class="row"><button class="btn" id="gs" type="button">Start hunt</button><span class="stat" aria-live="polite" id="gi">Time 20 · Score 0 · Best 0</span></div>
+<div id="board"></div><p id="gm" aria-live="polite" class="stat"></p></div>
+</section>
+
+<section class="sec reveal quiz" id="s6">
+<span class="num">06</span><h2>Check Your Understanding</h2>
+<div class="card"><div class="bar2"><i id="qb"></i></div><div id="qz"></div></div>
+</section>
+
+<section class="sec reveal" id="refs">
+<span class="num">07</span><h2>References</h2>
+<div class="card"><ol class="ref">
+<li>Boehm, B. W. (1981). <i>Software engineering economics</i>. Prentice-Hall.</li>
+<li>Dijkstra, E. W. (1970). <i>Notes on structured programming</i> (EWD249). Technological University Eindhoven.</li>
+<li>ISO/IEC. (2011). <i>ISO/IEC 25010:2011 Systems and software engineering: Systems and software quality requirements and evaluation (SQuaRE): System and software quality models</i>. International Organization for Standardization.</li>
+<li>McCabe, T. J. (1976). A complexity measure. <i>IEEE Transactions on Software Engineering, SE-2</i>(4), 308–320.</li>
+<li>Myers, G. J., Sandler, C., &amp; Badgett, T. (2011). <i>The art of software testing</i> (3rd ed.). Wiley.</li>
+<li>Pressman, R. S., &amp; Maxim, B. R. (2020). <i>Software engineering: A practitioner’s approach</i> (9th ed.). McGraw-Hill Education.</li>
+<li>Sommerville, I. (2016). <i>Software engineering</i> (10th ed.). Pearson.</li>
+</ol></div>
+</section>
+</div>
+</main>
+<footer><div class="wrap">Software Testing: Ensuring Quality and Reliability · Software Engineering</div></footer>
+<button id="top" type="button" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+"use strict";
+var d=document,$=function(s,r){return(r||d).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))};
+var RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+d.documentElement.classList.add("js");
+function el(t,c,x){var e=d.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+
+/* loader */
+function hideLd(){var l=$("#ld");if(l)l.classList.add("off")}
+window.addEventListener("load",function(){setTimeout(hideLd,RM?0:700)});setTimeout(hideLd,2500);
+
+/* reveal */
+var rv=$$(".reveal");
+if("IntersectionObserver"in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.08});rv.forEach(function(r){io.observe(r)})}else rv.forEach(function(r){r.classList.add("in")});
+setTimeout(function(){var h=$("#hc");if(h)h.classList.add("in")},100);
+
+/* scroll: progress, back-to-top, active nav, parallax */
+var links=$$("nav a"),secs=links.map(function(a){return $(a.getAttribute("href"))}),orbs=$$(".orb"),tk=false;
+function onScroll(){
+var y=window.pageYOffset,h=d.documentElement.scrollHeight-innerHeight;
+$("#bar").style.width=(h>0?y/h*100:0)+"%";
+$("#top").classList.toggle("show",y>500);
+var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<innerHeight*.4)cur=i});
+links.forEach(function(a,i){a.classList.toggle("on",i===cur);if(i===cur)a.setAttribute("aria-current","true");else a.removeAttribute("aria-current")});
+if(!RM)orbs.forEach(function(o){o.style.transform="translateY("+(y*o.dataset.p/100)+"px)"});
+tk=false}
+addEventListener("scroll",function(){if(!tk){tk=true;requestAnimationFrame(onScroll)}},{passive:true});
+addEventListener("resize",onScroll);onScroll();
+$("#top").addEventListener("click",function(){window.scrollTo({top:0,behavior:RM?"auto":"smooth"})});
+$("#pr").addEventListener("click",function(){window.print&&window.print()});
+
+/* particles + floating symbols */
+(function(){
+var cv=$("#cv"),cx=cv.getContext&&cv.getContext("2d");if(!cx||RM)return;
+var W,H,P=[],G=["✓","✗","</>","{ }","if","==","0/1","▢"],run=true;
+function size(){var r=window.devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*r;cv.height=H*r;cx.setTransform(r,0,0,r,0,0)}
+size();addEventListener("resize",size);
+var N=W<600?22:38;
+for(var i=0;i<N;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:-.1-Math.random()*.3,s:i%3?2+Math.random()*2:14+Math.random()*10,g:G[i%G.length],t:i%3===0})
+d.addEventListener("visibilitychange",function(){run=!d.hidden;if(run)loop()});
+function loop(){if(!run)return;cx.clearRect(0,0,W,H);
+P.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.y<-30){p.y=H+20;p.x=Math.random()*W}if(p.x<-30)p.x=W+20;if(p.x>W+30)p.x=-20;
+if(p.t){cx.font="600 "+p.s+"px Poppins,sans-serif";cx.fillStyle="rgba(127,166,138,.35)";cx.fillText(p.g,p.x,p.y)}
+else{cx.beginPath();cx.arc(p.x,p.y,p.s,0,6.283);cx.fillStyle="rgba(154,91,181,.32)";cx.shadowColor="#9a5bb5";cx.shadowBlur=10;cx.fill();cx.shadowBlur=0}});
+requestAnimationFrame(loop)}
+loop()})();
+
+/* tabs */
+function tabs(list){var ts=$$("[role=tab]",list);
+function sel(i,f){ts.forEach(function(t,j){var on=i===j;t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1;$("#"+t.getAttribute("aria-controls")).hidden=!on});if(f)ts[i].focus()}
+ts.forEach(function(t,i){t.addEventListener("click",function(){sel(i)});t.addEventListener("keydown",function(e){var k=e.key;if(k==="ArrowRight")sel((i+1)%ts.length,1);else if(k==="ArrowLeft")sel((i+ts.length-1)%ts.length,1);else return;e.preventDefault()})});sel(0)}
+tabs($("#vv"));tabs($("#bw"));
+
+/* quality chips */
+var Q={"Functional suitability":"Does the software provide the right functions, completely and correctly? Tested with requirement-based functional tests.","Performance efficiency":"Response time and resource use under load. Tested with load and stress tests.","Compatibility":"Coexistence and interoperability with other systems. Tested across platforms and integrations.","Usability":"Learnability, accessibility and error protection for users. Tested with usability sessions.","Reliability":"Maturity, availability and fault tolerance over time. Tested with failure-injection and long-run tests.","Security":"Confidentiality, integrity and authenticity. Tested with penetration and access-control tests.","Maintainability":"How easily the code can be modified. Supported by automated regression suites.","Portability":"Adaptability and installability in new environments. Tested on target platforms."};
+var qc=$("#qc");Object.keys(Q).forEach(function(k){var b=el("button","chip",k);b.type="button";b.setAttribute("aria-pressed","false");b.addEventListener("click",function(){$$(".chip",qc).forEach(function(c){c.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");$("#qo").textContent=k+": "+Q[k]});qc.appendChild(b)});
+
+/* black / white box demo */
+var CODE=["function classify(n) {","  if (n < 0 || n > 100)","    return \"Invalid\";","  if (n >= 50)","    return \"Pass\";","  return \"Fail\";","}"],
+HL=[[0,1,2],[0,1,2],[0,1,3,4],[0,1,3,5]],
+CL=["Invalid partition (n < 0)","Invalid partition (n > 100)","Valid partition: Pass (50–100)","Valid partition: Fail (0–49)"],
+RES=["Invalid","Invalid","Pass","Fail"],cov=[false,false,false,false],
+code=$("#code"),lines=CODE.map(function(t){var s=el("span",null,t);code.appendChild(s);return s}),dots=$("#dots"),
+dl=CODE;
+["P1 n<0","P2 n>100","P3 pass","P4 fail"].forEach(function(t){dots.appendChild(el("i",null,t))});
+function classify(n){return n<0?0:n>100?1:n>=50?2:3}
+function runTest(){var v=$("#inp").value.trim(),n=Number(v);
+if(v===""||!isFinite(n)){var m="Enter a number such as 49 or 101.";$("#bo").textContent=m;$("#wo").textContent=m;return}
+var p=classify(n);
+$("#bo").textContent="Input "+n+" → Output \""+RES[p]+"\" · "+CL[p];
+$("#wo").textContent="Input "+n+" executed path P"+(p+1)+" → \""+RES[p]+"\"";
+lines.forEach(function(l,i){l.classList.toggle("hl",HL[p].indexOf(i)>-1)});
+cov[p]=true;paint()}
+function paint(){var c=0;$$("i",dots).forEach(function(i,j){i.classList.toggle("on",cov[j]);if(cov[j])c++});$("#cov").textContent="Path coverage: "+c+"/4"+(c===4?" · all independent paths covered ✔":"")}
+$("#run").addEventListener("click",runTest);
+$("#inp").addEventListener("keydown",function(e){if(e.key==="Enter")runTest()});
+$("#rst").addEventListener("click",function(){cov=[false,false,false,false];lines.forEach(function(l){l.classList.remove("hl")});$("#wo").textContent="Coverage reset. Run a test to light up the executed path.";paint()});
+[-1,0,49,50,75,100,101].forEach(function(v){var b=el("button","chip",String(v));b.type="button";b.addEventListener("click",function(){$("#inp").value=v;runTest()});$("#bv").appendChild(b)});
+
+/* levels */
+var LV=[["Unit","Individual functions or classes in isolation, usually white-box, run by the developer with a framework such as JUnit or pytest.","Verify that classify(50) returns “Pass”."],["Integration","Interfaces between combined components, built up incrementally (top-down, bottom-up) with stubs and drivers.","Check the login module passes a valid token to the profile service."],["Validation","Whether the software meets customer requirements, through black-box and acceptance (alpha/beta) testing.","A client confirms the booking flow matches their business needs."],["System","The complete integrated system in its environment: recovery, security, stress and performance testing.","Run 5,000 simulated users against the deployed application."]],
+lg=$("#lvs");
+LV.forEach(function(l,i){var b=el("button","card lv");b.type="button";b.setAttribute("aria-pressed","false");b.appendChild(el("div","k","0"+(i+1)));b.appendChild(el("h3",null,l[0]+" testing"));b.appendChild(el("span",null,l[1]));
+b.addEventListener("click",function(){$$(".lv",lg).forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");var o=$("#lvo");o.textContent="";var s=el("b",null,"Example: ");o.appendChild(s);o.appendChild(d.createTextNode(l[2]+" (Pressman & Maxim, 2020)."))});lg.appendChild(b)});
+$("#lvo").textContent="Select a level above to see a practical example.";
+
+/* game */
+var cells=[],board=$("#board"),T=20,S=0,B=0,cur=-1,tm=null,sp=null,on=false,TX=["x=null","i<=n","a/0","=","else{","null.","idx+1","while()","[-1]","==","0.1+.2","str++"];
+TX.forEach(function(t,i){var b=el("button",null,t);b.type="button";b.addEventListener("click",function(){if(!on)return;if(i===cur){S++;b.classList.remove("bug");cur=-1}else S=Math.max(0,S-1);info()});board.appendChild(b);cells.push(b)});
+function info(){$("#gi").textContent="Time "+T+" · Score "+S+" · Best "+B}
+function stop(){on=false;clearInterval(tm);clearInterval(sp);if(cur>-1)cells[cur].classList.remove("bug");cur=-1;B=Math.max(B,S);info();$("#gm").textContent="Time! You squashed "+S+" bug"+(S===1?"":"s")+". Tests find defects only when someone looks.";$("#gs").textContent="Play again"}
+$("#gs").addEventListener("click",function(){stop();on=true;T=20;S=0;$("#gm").textContent="";$("#gs").textContent="Restart";info();
+tm=setInterval(function(){T--;info();if(T<=0)stop()},1000);
+sp=setInterval(function(){if(cur>-1)cells[cur].classList.remove("bug");var n;do{n=Math.floor(Math.random()*cells.length)}while(n===cur);cur=n;cells[n].classList.add("bug")},800)});
+$("#gm").textContent="";
+
+/* quiz */
+var QZ=[["Verification asks which question?",["Are we building the right product?","Are we building the product right?","Is the user happy?","Is the server fast?"],1,"Verification checks conformance to specification; validation checks fitness for user needs."],
+["Which technique is black-box?",["Basis-path testing","Statement coverage","Boundary value analysis","Code inspection of loops"],2,"Boundary value analysis uses only the specification’s input ranges."],
+["A function has 3 predicate conditions. What is V(G)?",["3","4","6","8"],1,"V(G) = P + 1 = 4 independent paths."],
+["Which level tests components in isolation?",["Unit testing","System testing","Validation testing","Acceptance testing"],0,"Unit tests exercise the smallest testable parts independently."],
+["Validation testing mainly confirms that…",["Code follows style rules","Requirements and user expectations are met","Memory is freed","Modules compile"],1,"Validation shows the software does what the customer actually needs."]],
+qi=0,qs=0,qz=$("#qz");
+function ask(){qz.textContent="";$("#qb").style.width=(qi/QZ.length*100)+"%";
+if(qi>=QZ.length){qz.appendChild(el("h3",null,"Score: "+qs+" / "+QZ.length));qz.appendChild(el("p",null,qs>=4?"Excellent. You have a solid grasp of software testing.":qs>=3?"Good work. Review the sections you missed and try again.":"Keep going. Re-read the sections and retry."));var r=el("button","btn","Restart quiz");r.type="button";r.addEventListener("click",function(){qi=0;qs=0;ask()});qz.appendChild(r);return}
+var q=QZ[qi],fb=el("div","out");fb.setAttribute("aria-live","polite");fb.style.display="none";
+qz.appendChild(el("p","stat","Question "+(qi+1)+" of "+QZ.length));qz.appendChild(el("h3",null,q[0]));
+var bs=q[1].map(function(t,i){var b=el("button","opt",t);b.type="button";b.addEventListener("click",function(){bs.forEach(function(x,j){x.disabled=true;if(j===q[2])x.classList.add("ok")});if(i===q[2]){qs++;fb.textContent="✔ Correct. "+q[3]}else{b.classList.add("bad");fb.textContent="✘ Not quite. "+q[3]}fb.style.display="block";var n=el("button","btn",qi===QZ.length-1?"See score":"Next question");n.type="button";n.style.marginTop="12px";n.addEventListener("click",function(){qi++;ask()});qz.appendChild(n);n.focus()});qz.appendChild(b);return b});
+qz.appendChild(fb)}
+ask();
+})();
+</script>
+</body>
+</html>
